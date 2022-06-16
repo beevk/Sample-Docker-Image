@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Testing Containers</title>
+    <style>
+        .main {
+            text-align: center;
+            margin-top: 3rem;
+        }
+
+        h1 {
+            font-size: 3rem;
+        }
+
+        p {
+            font-size: 1.8rem;
+        }
+
+        #ip-address {
+            color:mediumturquoise;
+        }
+
+        #route {
+            color: tomato;
+        }
+
+        #query {
+            color:greenyellow;
+        }
+    </style>
+</head>
+<body>
+    <div class="main">
+        <h1>Testing ECS and ECR</h1>
+        <p><strong>IP Address: </strong> <span id="ip-address"></span></p>
+        <p><strong>Route: </strong> <span id="route"></span></p>
+        <p><strong>Query Param: </strong> <span id="query"></span></p>
+    </div>
+    <script>
+        try {
+            const URL = window.location;
+            console.log('::Loc:::', location);
+            document.getElementById('route').textContent = URL.pathname || '/';
+            document.getElementById('query').textContent = URL.search || 'n/a';
+        } catch (err) {
+            console.error(err);
+            document.getElementById('route').textContent = 'Unknown';
+            document.getElementById('query').textContent = 'Unknown';
+        }
+
+        fetch('https://api.ipify.org?format=json')
+        .then(res => res.json())
+        .then(res => {
+            document.getElementById('ip-address').textContent = res.ip;
+        }).catch(e => {
+            document.getElementById('ip-address').textContent = 'Unknown';
+            console.error(e);
+        });
+    </script>
+</body>
+</html>
